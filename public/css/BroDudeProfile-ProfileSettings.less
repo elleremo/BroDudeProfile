@@ -1,0 +1,171 @@
+body.profile-tab-edit {
+
+  .profile__settings {
+    max-width: 80%;
+    margin: auto;
+  }
+
+  .profile__settings-row {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding: 8px 0;
+
+    &:last-child {
+
+    }
+
+    .text {
+      display: block;
+      float: left;
+      width: 40%;
+      text-align: right;
+      padding-right: 20px;
+      font-family: 'PT Sans', serif;
+      font-size: 15px;
+      color: #1c1c1c;
+
+    }
+
+    .control {
+      width: 50%;
+
+      .input__text,
+      .selectbox {
+        font-family: 'PT Sans', serif;
+        background-color: #fff;
+        padding: 6px 9px;
+        border-radius: 3px;
+      }
+
+      input[type='text'] {
+        display: block;
+        float: left;
+        border: 1px solid #ADADAD;
+      }
+
+      .input__text {
+        height: 40px;
+      }
+
+      .input__text,
+      .selectbox,
+      .jq-selectbox,
+      .jq-password {
+        min-width: 270px;
+      }
+
+      .jq-selectbox {
+        .jq-selectbox__select {
+          height: 40px;
+        }
+      }
+
+      .jq-selectbox,
+      .jq-password {
+        padding: 0;
+      }
+
+      .jq-password {
+        position: relative;
+
+        input {
+          border: none;
+          background-color: transparent;
+          width: ~"calc(100% - 38px)";
+        }
+
+        .jq-password__switch {
+          position: absolute;
+          right: 0;
+        }
+      }
+
+      .jq-file {
+        padding: 0;
+
+        .jq-file__name {
+          width: ~"calc( 100% - 76px)";
+        }
+      }
+
+    }
+
+    .profile__submit {
+      cursor: pointer;
+      display: block;
+      background-color: #044476;
+      border: 1px solid #044476;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 18px;
+      overflow: hidden;
+      position: relative;
+      font-family: "'PT Sans'", serif;
+      font-size: 14px;
+      transition: color .3s ease 0s;
+      height: 32px;
+      padding: 0 20px;
+    }
+
+  }
+
+}
+
+.profile__alert-wrap {
+  font-family: 'PT Sans', serif;
+  font-size: 15px;
+  color: #1c1c1c;
+  width: 100%;
+  padding: 12px 20px;
+  border-left: 6px solid;
+  margin: 18px 0;
+
+  &.success {
+    background: #d4f9e0;
+    border-left-color: #10cb68;
+  }
+
+  &.warning {
+    background-color: #f9f5d4;
+    border-left-color: #fce106;
+  }
+
+  &.error {
+    background-color: #fee;
+    border-left-color: #fe0606;
+  }
+
+}
+
+@media (max-width: 601px) {
+
+
+
+
+  body.profile-tab-edit {
+
+    .profile__settings-row {
+      flex-direction: column;
+    }
+
+    .profile__settings-row {
+
+      .text {
+        width: 100%;
+        text-align: left;
+      }
+
+      .control {
+        width: 100%;
+      }
+
+    }
+
+    .profile__settings {
+      max-width: 100%;
+    }
+
+  }
+
+}

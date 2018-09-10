@@ -29,5 +29,8 @@
     "imagemin-pngquant": "^5.0.1",
     "streamqueue": "^1.1.1",
     "svgo": "^0.7.2"
+  },
+  "dependencies": {
+    "gulp": "^3.9.1"
   }
 }

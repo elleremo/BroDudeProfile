@@ -19,7 +19,7 @@ class Router {
 			if ( 'profile' == get_query_var( 'pagename' ) ) {
 				$this->redirect();
 			}
-		},1 );
+		}, 1 );
 
 	}
 
@@ -66,16 +66,14 @@ class Router {
 		$array  = explode( '/', $string );
 
 		if ( false !== strripos( $string, 'id-' ) ) {
-			preg_match ("#\/id-([0-9]{1,})#",$string, $m);
+			preg_match( "#\/id-([0-9]{1,})#", $string, $m );
+			set_query_var( 'uid', intval( $m[1] ) );
+		} else {
 			set_query_var( 'uid', false );
 		}
-
-
-		d(
-			$m,
-			$array,
-			$string
-		);
+		if ( ! empty( $array ) ) {
+			set_query_var('tab_active', $array[0]);
+		}
 
 	}
 

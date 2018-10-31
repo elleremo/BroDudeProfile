@@ -12,11 +12,14 @@ class Router {
 	public function __construct() {
 		$this->slug = BroDudeProfile::$slug;
 
-		add_action( 'init', [ $this, 'router' ] );
+		add_action( 'init', [ $this, 'router_two' ] );
 
 		add_action( "template_redirect", function () {
-			$this->redirect();
-		} );
+			$this->argsProcessing();
+			if ( 'profile' == get_query_var( 'pagename' ) ) {
+				$this->redirect();
+			}
+		},1 );
 
 	}
 
@@ -25,6 +28,17 @@ class Router {
 		$redirect->redirect_profile();
 		$redirect->not_exist_user();
 		$redirect->self_profile();
+	}
+
+	public function router_two() {
+
+		add_rewrite_tag( '%profile_string%', '([^&]+)' );
+
+		add_rewrite_rule(
+			"^({$this->slug})(.+)",
+			'index.php?pagename=$matches[1]&profile_string=$matches[2]',
+			'top'
+		);
 	}
 
 	public function router() {
@@ -45,6 +59,24 @@ class Router {
 				'top'
 			);
 		}
+	}
+
+	public function argsProcessing() {
+		$string = ltrim( get_query_var( 'profile_string' ), '/' );
+		$array  = explode( '/', $string );
+
+		if ( false !== strripos( $string, 'id-' ) ) {
+			preg_match ("#\/id-([0-9]{1,})#",$string, $m);
+			set_query_var( 'uid', false );
+		}
+
+
+		d(
+			$m,
+			$array,
+			$string
+		);
+
 	}
 
 }

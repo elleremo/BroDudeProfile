@@ -34,6 +34,10 @@ class Settings {
 	}
 
 	public function add_js_css() {
+        if(isset($_GET['edit'])){
+            set_query_var('tab_active','edit');
+        }
+
 		if ( 'edit' === get_query_var( 'tab_active', false ) ) {
 			$this->addCss( "ProfileSettings" );
 		}

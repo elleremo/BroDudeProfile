@@ -45,7 +45,7 @@ class DefaultAvatar {
 			$id_or_email = $id_or_email->comment_author_email;
 		}
 
-		if ( is_email( $id_or_email ) ) {
+		if ( is_string( $id_or_email) && is_email(  $id_or_email ) ) {
 			$user_data = get_user_by( 'email', $id_or_email );
 
 			if ( false == $user_data ) {

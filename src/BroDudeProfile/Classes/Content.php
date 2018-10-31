@@ -96,6 +96,11 @@ class Content {
 
 	public function row( $type ) {
 		$method = "user_" . $type;
+
+		if(isset($_GET['edit'])){
+            set_query_var('tab_active','edit');
+        }
+
 		if ( "edit" === $type ) {
 			do_action( 'BroDudeProfile__user-settings', $this->uid );
 

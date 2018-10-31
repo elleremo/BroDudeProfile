@@ -62,17 +62,27 @@ class Router {
 	}
 
 	public function argsProcessing() {
-		$string = ltrim( get_query_var( 'profile_string' ), '/' );
-		$array  = explode( '/', $string );
 
-		if ( false !== strripos( $string, 'id-' ) ) {
-			preg_match( "#\/id-([0-9]{1,})#", $string, $m );
-			set_query_var( 'uid', intval( $m[1] ) );
-		} else {
-			set_query_var( 'uid', false );
-		}
-		if ( ! empty( $array ) ) {
-			set_query_var('tab_active', $array[0]);
+		if ( 'profile' == get_query_var( 'pagename' ) ) {
+
+			$string = ltrim( get_query_var( 'profile_string' ), '/' );
+
+			if ( is_user_logged_in() && empty( $string ) ) {
+				$string = 'posts';
+				set_query_var( 'tab_active', '/posts' );
+			}
+
+			$array = explode( '/', $string );
+
+			if ( false !== strripos( $string, 'id-' ) ) {
+				preg_match( "#\/id-([0-9]{1,})#", $string, $m );
+				set_query_var( 'uid', intval( $m[1] ) );
+			} else {
+				set_query_var( 'uid', false );
+			}
+			if ( ! empty( $array ) ) {
+				set_query_var( 'tab_active', $array[0] );
+			}
 		}
 
 	}

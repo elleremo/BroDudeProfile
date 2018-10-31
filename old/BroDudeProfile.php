@@ -23,7 +23,6 @@ use BroDudeProfile\Classes\Content;
 use BroDudeProfile\Classes\DefaultAvatar;
 use BroDudeProfile\Classes\FavoriteAdd;
 use BroDudeProfile\Classes\Header;
-use BroDudeProfile\Classes\LinkHelper;
 use BroDudeProfile\Classes\NoTitle;
 use BroDudeProfile\Classes\ProfileLinkFilter;
 use BroDudeProfile\Classes\RemoveWpautop;
@@ -83,7 +82,6 @@ class BroDudeProfile extends Wrap {
 
 		new ProfileLinkFilter();
 
-		new LinkHelper();
 
 	}
 

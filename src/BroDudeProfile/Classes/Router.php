@@ -30,7 +30,7 @@ class Router {
 		$redirect->self_profile();
 	}
 
-	public function router_two() {
+	public function router() {
 
 		add_rewrite_tag( '%profile_string%', '([^&]+)' );
 
@@ -39,26 +39,6 @@ class Router {
 			'index.php?pagename=$matches[1]&profile_string=$matches[2]',
 			'top'
 		);
-	}
-
-	public function router() {
-
-		add_rewrite_tag( '%tab_active%', '([^&]+)' );
-		add_rewrite_tag( '%uid%', '([^&]+)' );
-
-		add_rewrite_rule(
-			"^({$this->slug})\/([A-z]*)\/([0-9]+)\/{0,}($|\/page\/?([0-9]{1,})\/?$)",
-			'index.php?pagename=$matches[1]&tab_active=$matches[2]&uid=$matches[3]&paged=$matches[5]',
-			'top'
-		);
-
-		if ( is_user_logged_in() ) {
-			add_rewrite_rule(
-				"^({$this->slug})\/([A-z]*)\/{0,}($|\/page\/?([0-9]{1,})\/?$)",
-				'index.php?pagename=$matches[1]&tab_active=$matches[2]&paged=$matches[4]',
-				'top'
-			);
-		}
 	}
 
 	public function argsProcessing() {

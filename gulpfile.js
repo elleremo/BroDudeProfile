@@ -84,20 +84,6 @@ gulp.task('images', function () {
         .pipe(plugins.notify({message: 'Изображения оптимизированы'}));
 });
 
-gulp.task('i18n', function () {
-    return gulp.src(plugin_src.lang.src)
-        .pipe(plugins.sort())
-        .pipe(plugins.wpPot({
-            package: path.basename(__dirname)
-        }))
-        .pipe(plugins.rename({
-            basename: path.basename(__dirname),
-            extname: ".pot"
-        }))
-        .pipe(gulp.dest(plugin_src.lang.dest));
-
-});
-
 gulp.task('clean', function (cb) {
     del(plugin_src.cssMaps, cb);
 });
@@ -120,4 +106,4 @@ gulp.task('watch', function () {
         });
 });
 
-gulp.task('default', ['clean', 'css', 'js', 'i18n', 'watch', 'images']);
+gulp.task('default', ['clean', 'css', 'js', 'watch', 'images']);

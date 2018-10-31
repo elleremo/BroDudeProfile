@@ -197,7 +197,7 @@ class Content {
 			[
 				'author'         => $this->uid,
 				'posts_per_page' => $this->per_page,
-				'paged'          => $this->offset,
+				'paged'          => (get_query_var('paged')) ? get_query_var('paged') : 1,
 				'post_type'      => [ 'advert_post', 'post' ],
 				'post_status'    => 'publish'
 			]

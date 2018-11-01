@@ -67,7 +67,8 @@ class Content {
 		$type = str_replace( 'user_', '', $type );
 
 		if ( 'posts' === $type ) {
-			return $wpdb->get_var( "
+
+		    $count = $wpdb->get_var( "
                 SELECT count('ID') 
                 FROM `{$wpdb->prefix}posts`
                 WHERE `post_author` = {$this->uid} 
@@ -75,14 +76,18 @@ class Content {
                 AND `post_status` = 'publish'  
 		    " );
 
+			return $count;
+
 		} elseif ( 'favorites' === $type ) {
-			$favorites = new Favorites( $this->uid );
+
+		    $favorites = new Favorites( $this->uid );
+
 			if ( false == $favorites->favorites ) {
 				return false;
 			}
 			$favorites_str = implode( ',', $favorites->favorites );
 
-			return $wpdb->get_var( "
+			$count = $wpdb->get_var( "
                 SELECT count('ID')
                 FROM `{$wpdb->prefix}posts`
                 WHERE `ID` IN({$favorites_str})
@@ -90,6 +95,7 @@ class Content {
                 AND `post_status` = 'publish'
 		    " );
 
+			return $count;
 		}
 
 	}
@@ -97,9 +103,9 @@ class Content {
 	public function row( $type ) {
 		$method = "user_" . $type;
 
-		if(isset($_GET['edit'])){
-            set_query_var('tab_active','edit');
-        }
+		if ( isset( $_GET['edit'] ) ) {
+			set_query_var( 'tab_active', 'edit' );
+		}
 
 		if ( "edit" === $type ) {
 			do_action( 'BroDudeProfile__user-settings', $this->uid );
@@ -197,22 +203,11 @@ class Content {
 			[
 				'author'         => $this->uid,
 				'posts_per_page' => $this->per_page,
-				'paged'          => (get_query_var('paged')) ? get_query_var('paged') : 1,
+				'paged'          => ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1,
 				'post_type'      => [ 'advert_post', 'post' ],
 				'post_status'    => 'publish'
 			]
 		);
-
-		d(
-            [
-                'author'         => $this->uid,
-                'posts_per_page' => $this->per_page,
-                'paged'          => (get_query_var('paged')) ? get_query_var('paged') : 1,
-                'post_type'      => [ 'advert_post', 'post' ],
-                'post_status'    => 'publish'
-            ],
-           $posts
-        );
 
 		if ( 1 > count( $posts ) ) {
 			return false;

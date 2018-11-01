@@ -32,7 +32,7 @@ class Header {
 			unset( $this->menu['favorites'] );
 
 			$this->menu = array_map( function ( $elem ) {
-				$elem['link'] = $elem['link'] . get_query_var( 'uid' );
+				$elem['link'] = $elem['link'] .'id-'. get_query_var( 'uid' );
 
 				return $elem;
 			}, $this->menu );

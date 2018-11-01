@@ -2,7 +2,6 @@
 
 namespace BroDudeProfile\Classes;
 
-
 use BroDudeProfile;
 
 class Router
@@ -52,7 +51,6 @@ class Router
 
             $string = ltrim(get_query_var('profile_string'), '/');
 
-
             if (is_user_logged_in() && empty($string)) {
                 $string = 'posts';
                 set_query_var('tab_active', '/posts');
@@ -77,7 +75,6 @@ class Router
                 set_query_var('tab_active', $array[0]);
             }
         }
-
     }
 
 }

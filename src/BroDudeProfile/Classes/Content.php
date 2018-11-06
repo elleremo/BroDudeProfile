@@ -24,7 +24,7 @@ class Content {
 		'strong',
 	];
 
-	private $per_page = 10;
+	public static $per_page = 10;
 	private $offset = 1;
 
 	public function __construct() {
@@ -62,44 +62,6 @@ class Content {
 
 	}
 
-	public function max_num_pages( $type ) {
-		global $wpdb;
-		$type = str_replace( 'user_', '', $type );
-
-		if ( 'posts' === $type ) {
-
-		    $count = $wpdb->get_var( "
-                SELECT count('ID') 
-                FROM `{$wpdb->prefix}posts`
-                WHERE `post_author` = {$this->uid} 
-                AND `post_type` IN( 'post', 'advert_post') 
-                AND `post_status` = 'publish'  
-		    " );
-
-			return $count;
-
-		} elseif ( 'favorites' === $type ) {
-
-		    $favorites = new Favorites( $this->uid );
-
-			if ( false == $favorites->favorites ) {
-				return false;
-			}
-			$favorites_str = implode( ',', $favorites->favorites );
-
-			$count = $wpdb->get_var( "
-                SELECT count('ID')
-                FROM `{$wpdb->prefix}posts`
-                WHERE `ID` IN({$favorites_str})
-                AND `post_type` IN( 'post', 'advert_post')
-                AND `post_status` = 'publish'
-		    " );
-
-			return $count;
-		}
-
-	}
-
 	public function row( $type ) {
 		$method = "user_" . $type;
 
@@ -111,15 +73,6 @@ class Content {
 			do_action( 'BroDudeProfile__user-settings', $this->uid );
 
 		} else if ( method_exists( $this, $method ) ) {
-
-
-			$max_num_pages = $this->max_num_pages( $method );
-			if ( ! $max_num_pages ) {
-				$max_num_pages = 0;
-			}
-			set_query_var( 'max_num_pages', $max_num_pages );
-			set_query_var( 'posts_per_page', $this->per_page );
-			$GLOBALS['wp_query']->max_num_pages = $max_num_pages;
 
 			$posts = $this->$method();
 
@@ -202,7 +155,7 @@ class Content {
 		$posts = get_posts(
 			[
 				'author'         => $this->uid,
-				'posts_per_page' => $this->per_page,
+				'posts_per_page' => self::$per_page,
 				'paged'          => ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1,
 				'post_type'      => [ 'advert_post', 'post' ],
 				'post_status'    => 'publish'
@@ -222,7 +175,7 @@ class Content {
 				'user_id'  => $this->uid,
 				'status'   => 'approve',
 				'order_by' => 'comment_date',
-				'number'   => $this->per_page,
+				'number'   => self::$per_page,
 				'paged'    => $this->offset,
 			]
 		);
@@ -244,7 +197,7 @@ class Content {
 		$posts = get_posts(
 			[
 				'post__in'       => $favorites->favorites,
-				'posts_per_page' => $this->per_page,
+				'posts_per_page' => self::$per_page,
 				'paged'          => $this->offset,
 				'post_type'      => [ 'advert_post', 'post' ],
 				'post_status'    => 'publish'

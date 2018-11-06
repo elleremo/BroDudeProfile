@@ -99,9 +99,9 @@ class Router {
                 AND `post_status` = 'publish'  
 		    " );
 
-			return (int) floor( $count / Content::$per_page );
+			return (int) ceil( $count / Content::$per_page );
 
-		} elseif ( 'favorites' === $type ) {
+		} else if ( 'favorites' === $type ) {
 
 			$favorites = new Favorites( $uid );
 
@@ -118,9 +118,21 @@ class Router {
                 AND `post_status` = 'publish'
 		    " );
 
-			return (int) floor( $count / Content::$per_page );
-		}
+			return (int) ceil( $count / Content::$per_page );
 
+		} else if ( 'comments' === $type ) {
+
+			$email = BroDudeProfile::$userinfo->data->user_email;
+
+			$count = (int) $wpdb->get_var( "
+				SELECT COUNT(comment_ID) 
+				FROM wp_comments 
+				WHERE comment_author_email ='{$email}' 
+				AND comment_approved = '1' 
+			" );
+
+			return (int) ceil( $count / Content::$per_page );
+		}
 	}
 
 }

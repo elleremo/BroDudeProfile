@@ -131,7 +131,7 @@ class Header {
 								}
 							} elseif ( "comments" == $key ) {
 								$count_comments = $wpdb->get_var(
-									"SELECT COUNT(comment_ID) FROM  {$wpdb->comments} WHERE comment_author_email ='{$this->user_data->data->user_email}' "
+									"SELECT COUNT(comment_ID) FROM  {$wpdb->comments} WHERE user_id ='{$this->uid}' "
 								);
 								if ( 0 < $count_comments ) {
 									printf( "(%s)", $count_comments );

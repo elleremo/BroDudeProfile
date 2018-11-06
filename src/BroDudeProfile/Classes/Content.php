@@ -179,9 +179,11 @@ class Content {
 				'status'   => 'approve',
 				'order_by' => 'comment_date',
 				'number'   => self::$per_page,
-				'offset'   => ( $this->offset < 2 ? 0 : ( $this->offset - 1 ) * self::$per_page )
+//				'offset'   => ($offset < 2 ? 0 : ( $offset - 1 ) * self::$per_page )
 			]
 		);
+
+		d($coments);
 
 
 		if ( 1 > count( $coments ) ) {

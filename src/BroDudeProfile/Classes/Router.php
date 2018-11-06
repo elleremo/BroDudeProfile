@@ -122,12 +122,12 @@ class Router {
 
 		} else if ( 'comments' === $type ) {
 
-			$email = BroDudeProfile::$userinfo->data->user_email;
+			$uid = BroDudeProfile::$uid;
 
 			$count = (int) $wpdb->get_var( "
 				SELECT COUNT(comment_ID) 
 				FROM wp_comments 
-				WHERE comment_author_email ='{$email}' 
+				WHERE user_id ='{$uid}' 
 				AND comment_approved = '1' 
 			" );
 

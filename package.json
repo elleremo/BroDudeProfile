@@ -1,12 +1,12 @@
 {
-  "name": "wordpress-magic-boilerplate",
+  "name": "bro-dude-profile",
   "version": "5.0.0",
   "description": "WordPress theme gulp tasks",
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "petrozavodsky",
+  "author": "Elleremo",
   "license": "ISC",
   "devDependencies": {
     "autoprefixer": "^7.1.4",

@@ -170,15 +170,19 @@ class Content {
 	}
 
 	public function user_comments() {
+
+		$offset = (int) $this->offset;
+
 		$coments = get_comments(
 			[
 				'user_id'  => $this->uid,
 				'status'   => 'approve',
 				'order_by' => 'comment_date',
 				'number'   => self::$per_page,
-				'paged'    => $this->offset,
+				'offset'   => ( $this->offset < 2 ? 0 : ( $this->offset - 1 ) * self::$per_page )
 			]
 		);
+
 
 		if ( 1 > count( $coments ) ) {
 			return false;

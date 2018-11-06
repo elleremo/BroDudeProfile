@@ -1,9 +1,7 @@
 <?php
 /*
 Plugin Name: BroDude Profile
-Plugin URI: http://alkoweb.ru
-Author: Petrozavodsky
-Author URI: http://alkoweb.ru
+Author: Elleremo
 */
 
 if ( ! defined( 'ABSPATH' ) ) {

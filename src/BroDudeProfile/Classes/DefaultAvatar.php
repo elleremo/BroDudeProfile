@@ -56,56 +56,59 @@ class DefaultAvatar {
 
 		}
 
-		$user_id = intval( $id_or_email );
-		$url     = get_user_meta( $user_id, self::$user_avatar_meta_field, true );
+		if(is_string($id_or_email) || is_numeric($id_or_email)) {
+
+			$user_id = intval( $id_or_email );
+			$url     = get_user_meta( $user_id, self::$user_avatar_meta_field, true );
 
 
-		if ( is_array( $url ) && array_key_exists( 'avatar_id', $url ) && array_key_exists( 'full_url', $url ) ) {
+			if ( is_array( $url ) && array_key_exists( 'avatar_id', $url ) && array_key_exists( 'full_url', $url ) ) {
 
-			$avatar_size = 'image_50x50';
+				$avatar_size = 'image_50x50';
 
-			if ( 100 == $size ) {
-				$avatar_size = 'image_100x100';
+				if ( 100 == $size ) {
+					$avatar_size = 'image_100x100';
+				}
+
+				$image_data = wp_get_attachment_image_src( $url['avatar_id'], $avatar_size );
+
+				return sprintf(
+					"<img alt='%s' src='%s' srcset='%s' sizes='%s' class='%s' height='%d' width='%d' %s />",
+					esc_attr( $args['alt'] ),
+					esc_url( array_shift( $image_data ) ),
+					wp_get_attachment_image_srcset( $url['avatar_id'], $avatar_size ),
+					wp_get_attachment_image_sizes( $url['avatar_id'], $avatar_size ),
+					'avatar avatar-50 photo author-avatar-img',
+					(int) $args['height'],
+					(int) $args['width'],
+					$args['extra_attr']
+				);
+
 			}
 
-			$image_data = wp_get_attachment_image_src( $url['avatar_id'], $avatar_size );
+			if ( empty( $url ) || false == $url ) {
+				$exist_file_name = $this->user_avatar_avatar_exists( $user_id );
 
-			return sprintf(
-				"<img alt='%s' src='%s' srcset='%s' sizes='%s' class='%s' height='%d' width='%d' %s />",
-				esc_attr( $args['alt'] ),
-				esc_url( array_shift( $image_data ) ),
-				wp_get_attachment_image_srcset( $url['avatar_id'], $avatar_size ),
-				wp_get_attachment_image_sizes( $url['avatar_id'], $avatar_size ),
-				'avatar avatar-50 photo author-avatar-img',
-				(int) $args['height'],
-				(int) $args['width'],
-				$args['extra_attr']
-			);
+				if ( false !== $exist_file_name ) {
+					$url = self::$old_avatars_url . $user_id . "/" . $exist_file_name;
+				}
 
-		}
-
-		if ( empty( $url ) || false == $url ) {
-			$exist_file_name = $this->user_avatar_avatar_exists( $user_id );
-
-			if ( false !== $exist_file_name ) {
-				$url = self::$old_avatars_url . $user_id . "/" . $exist_file_name;
+			} else if ( is_array( $url ) && array_key_exists( 'full_url', $url ) ) {
+				$url = $url['full_url'];
 			}
 
-		} else if ( is_array( $url ) && array_key_exists( 'full_url', $url ) ) {
-			$url = $url['full_url'];
-		}
-
-		if ( ! empty( $url ) ) {
-			return sprintf(
-				"<img alt='%s' src='%s'  class='%s' height='%d' width='%d' %s/>",
-				esc_attr( $args['alt'] ),
-				esc_url( $url ),
+			if ( ! empty( $url ) ) {
+				return sprintf(
+					"<img alt='%s' src='%s'  class='%s' height='%d' width='%d' %s/>",
+					esc_attr( $args['alt'] ),
+					esc_url( $url ),
 //				esc_url( $url2x ) . ' 2x',
-				'avatar avatar-50 photo author-avatar-img',
-				(int) $args['height'],
-				(int) $args['width'],
-				$args['extra_attr']
-			);
+					'avatar avatar-50 photo author-avatar-img',
+					(int) $args['height'],
+					(int) $args['width'],
+					$args['extra_attr']
+				);
+			}
 		}
 
 

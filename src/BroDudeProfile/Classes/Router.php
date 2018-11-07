@@ -114,7 +114,7 @@ class Router {
                 SELECT count('ID')
                 FROM `{$wpdb->prefix}posts`
                 WHERE `ID` IN ({$favorites_str})
-                AND `post_type` IN ( 'post', 'advert_post')
+                AND `post_type` IN( 'post', 'advert_post')
                 AND `post_status` = 'publish'
 		    " );
 

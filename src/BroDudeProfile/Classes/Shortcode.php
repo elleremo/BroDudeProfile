@@ -15,7 +15,7 @@ class Shortcode extends ActivateShortcode {
 	function init( $tag, $attrs ) {
 		add_action( "template_redirect", function () use ( $tag ) {
 			global $wp_query;
-			if ( is_singular() && is_object( $wp_query ) && has_shortcode( $wp_query->post->post_content, $tag ) ) {
+			if ( is_singular() && isset( $wp_query->post->post_content ) && has_shortcode( $wp_query->post->post_content, $tag ) ) {
 				$this->addCss( $tag, 'header' );
 			}
 
@@ -26,14 +26,9 @@ class Shortcode extends ActivateShortcode {
 	function base( $attrs, $content, $tag ) {
 
 		ob_start();
-		?>
-
-		<?php do_action( 'BroDudeProfile__shortcode-content' ); ?>
-
-		<?php
+		do_action( 'BroDudeProfile__shortcode-content' );
 		$res = ob_get_contents();
 		ob_clean();
-
 
 		return $res;
 	}

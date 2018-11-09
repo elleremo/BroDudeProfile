@@ -91,7 +91,7 @@ class Router {
 
 		if ( 'posts' === $type ) {
 
-			if ( empty( $uid ) ) {
+			if (!empty( $uid ) ) {
 				$count = (int) $wpdb->get_var( "
                 SELECT count('ID') 
                 FROM `{$wpdb->prefix}posts`
@@ -102,6 +102,7 @@ class Router {
 			} else {
 				$count = 0;
 			}
+			d($count , $uid);
 
 			return (int) ceil( $count / Content::$per_page );
 
@@ -134,6 +135,7 @@ class Router {
 				WHERE user_id ='{$uid}' 
 				AND comment_approved = '1' 
 			" );
+
 
 			return (int) ceil( $count / Content::$per_page );
 		}

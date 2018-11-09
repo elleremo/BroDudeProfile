@@ -91,13 +91,17 @@ class Router {
 
 		if ( 'posts' === $type ) {
 
-			$count = (int) $wpdb->get_var( "
+			if ( empty( $uid ) ) {
+				$count = (int) $wpdb->get_var( "
                 SELECT count('ID') 
                 FROM `{$wpdb->prefix}posts`
                 WHERE `post_author` = {$uid} 
                 AND `post_type` IN ( 'post', 'advert_post') 
                 AND `post_status` = 'publish'  
 		    " );
+			} else {
+				$count = 0;
+			}
 
 			return (int) ceil( $count / Content::$per_page );
 
